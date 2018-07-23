@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    html {
+        height: 100%;
+    }
+
+    body {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+    }
+
+    .happy_container {
+        width: 100%;
+        min-width: 1280px;
+        min-height: 720px;
+    }
+
+    .happy_background {
+        height: 100%;
+        background: url("back1.jpg") no-repeat;
+        background-size: 100% 100%;
+    }
+
+    .happy_images {
+        margin: 0 auto;
+        width: 35%;
+    }
+
+    .happy_images img {
+        width: 100%;
+    }
+
+    .happy_word {
+        line-height: 1;
+        text-align: center;
+        font-size: 30px;
+        color: #ffffff;
+
+    }
+
+    .happy_input {
+        width: 30%;
+        background: #ffffff;
+        padding: 0 20px;
+        margin: 10px auto 0;
+        height: 50px;
+        border-radius: 30px;
+        font-size: 0;
+
+    }
+
+    .happy_input input {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        font-size: 24px;
+    }
+
+    .happy_confrim {
+
+        margin: 20px auto 0;
+        width: 10%;
+        background: url("./images/confrim.png") no-repeat;
+        background-size: 100% 100%;
+        height: 50px;
+    }
+
+    .happy_confrim a {
+        display: block;
+        text-decoration: none;
+        width: 100%;
+        text-align: center;
+        font-size: 18px;
+        letter-spacing: 20px;
+        text-indent: 20px;
+        color: #ffffff;
+        line-height: 40px;
+
+    }
+</style>
+
+<body>
+    <div class="happy_container happy_background">
+        <div class="happy_images">
+            <img src="./images/p1.png" alt="p1">
+        </div>
+        <div class="happy_word">
+            会员手机号码
+        </div>
+        <div class="happy_input">
+            <input type="text" maxlength="11" id="inin">
+        </div>
+        <div class="happy_confrim">
+            <a href="###" id="confrim">
+                确认
+            </a>
+        </div>
+    </div>
+    <script>
+        document.onkeyup = function (e) { 
+            var code = e.charCode || e.keyCode; 
+            if (code === 13) {
+               console.log("按下了回车");
+              var inp = document.getElementById("inin");
+              var reg = /^[1][2-9][0-9]{9}$/;
+             if (reg.test(inp.value)) {
+                 alert("OK")
+                 console.log("正确");
+             }else{
+                 alert("不OK")
+                 console.log("错误");
+             }
+            }
+        }
+        document.getElementById("confrim").onclick = function () {
+            var inp = document.getElementById("inin");
+            var reg = /^[1][2-9][0-9]{9}$/;
+             if (reg.test(inp.value)) {
+                 alert("OK")
+                 console.log("正确");
+             }else{
+                 alert("不OK")
+                 console.log("错误");
+             }
+          }
+    </script>
+</body>
+
+</html>

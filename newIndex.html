@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>newIndex</title>
+</head>
+
+<body>
+    <canvas id="canvas" width="1000" height="800"></canvas>
+    <script>
+        function drawWheel(ra) {
+            let obj = document.getElementById("canvas"); //canvas 对象
+            let context = obj.getContext('2d'); //上下文 2d
+            let canW = obj.width; //canvas 宽
+            let canH = obj.height; // canvas 高
+            let start = 0; // 初始弧度
+            let textList = ["会员积分150", "电影票两张", "洪宝来老冰柜", "小林外中瓶白酒127ml", "康师傅涵养泉550ml", "康师傅涵养泉550ml"]
+            let angle = Math.PI / 180 * (360 / textList.length); // 默认一个奖品得弧度
+            let roateDraw = Math.PI / 180;
+            let roateTime = ra;
+            let timer = null;
+            context.clearRect(0, 0, canW, canH);
+            context.save();
+            context.translate(canW / 2, canH / 2);
+            context.rotate(roateDraw * roateTime);
+            // var imgBack = new Image();
+            // imgBack.onload = function () {
+            //    context.drawImage(imgBack,-imgBack.width/2,-imgBack.height/2)
+           
+               context.font = '16px Microsoft YaHei';
+            for (let index = 0; index < textList.length; index++) {
+                var sAngle = start + angle * index;
+                var eAngle = sAngle + angle
+                context.beginPath();
+                //判断颜色
+                if (index % 2 === 0) {
+                    context.fillStyle = '#7575ff';
+
+                } else {
+                    context.fillStyle = '#5f59ff';
+                }
+                //绘制大圆
+                context.arc(0, 0, 200, sAngle, eAngle, false);
+                //绘制小圆              
+                context.arc(0, 0, 80, eAngle, sAngle, false);
+                context.fill();
+                context.save();
+                context.fillStyle = "#fff";
+                context.font = '24px Microsoft YaHei';
+
+
+                let tranX = 0 + Math.cos(sAngle + angle / 2) * 200;
+                let tranY = 0 + Math.sin(sAngle + angle / 2) * 200;
+                context.translate(tranX, tranY);
+                context.rotate(sAngle + angle / 2 + Math.PI / 2);
+                var textTimes = Math.ceil(textList[index].length / 3)
+                for (let j = 0; j < textTimes; j++) {
+                    context.fillText(textList[index].substring(3 * j, 3 * (j + 1)), -context.measureText(textList[index]
+                        .substring(3 * j, 3 * (j + 1))).width / 2, 28 * (j + 1));
+
+                }
+                // context.fillText(textList[index], -context.measureText(textList[index]).width / 2, 44);
+                context.restore();
+            }
+            //绘制图片
+            // context.save();
+            var img = new Image();
+            img.onload = function () {
+                context.drawImage(img, canW / 2 - img.width / 5, canH / 2 - img.height / 5 - img.height / 22, img.width /
+                    2.5, img.height / 2.5);
+
+            }
+            img.src = "turn.png";
+            // context.translate(0, 0);
+
+            // console.log(Math.PI * 2);
+            // console.log(Math.PI/180 * 10);
+            obj.onclick = function (e) {
+
+                var ra = 0;
+                console.log(ra)
+                timer = setInterval(function () {
+
+                    //判断公式 ra角度 * 弧度 >= 360 弧度 * 圈数 (由于指针向上 转盘开始角度从 顺时针90度开始) 
+                    //- 90度 - 默认角度得一半 - 产品位置 由于多执行了一次 所以在减去一次 ra*弧度
+                    if (ra * Math.PI / 180 <= Math.PI * 2 * 2 - Math.PI / 2 - angle / 2 - angle * 2 - Math.PI /
+                        180 * 1) {
+                        ra += 5;
+                    } else if (ra * Math.PI / 180 <= Math.PI * 2 * 2.5 - Math.PI / 2 - angle / 2 - angle *
+                        2 - Math.PI / 180 * 1) {
+                        ra += 3;
+                        console.log(11186);
+
+                    } else if (ra * Math.PI / 180 >= Math.PI * 2 * 3 - Math.PI / 2 - angle / 2 - angle * 2 -
+                        Math.PI / 180 * 1) {
+                        clearInterval(timer);
+                    } else {
+                        ra += 1;
+                        console.log(11186);
+                    }
+
+
+                    console.log(ra);
+                    drawWheel(ra);
+
+                }, 1)
+                // clearInterval(p);
+            }
+            // obj.addEventListener("click", function (e) {
+
+            // })
+            context.restore();
+            }
+            // imgBack.src = "background.jpg";
+
+           
+        // }
+        drawWheel();
+    </script>
+</body>
+
+</html>

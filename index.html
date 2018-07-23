@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>index</title>
+</head>
+
+<body style="margin: 0;padding: 0;">
+    <canvas id="canvas" width="1000" height="1000"></canvas>
+    <script>
+        function draw() {
+            let obj = document.getElementById("canvas");
+            let context = obj.getContext('2d');
+            var length = 6;
+            var img = new Image(120, 150);
+            img.onload = function () {
+                context.save();
+                // obj.width / 2, obj.height / 2
+                context.drawImage(img, obj.width / 2 - 60, obj.height / 2 - 89, 120, 150, );
+                context.restore();
+            }
+            img.src = "turn.png";
+            for (let i = 0; i < 6; i++) {
+                let startAngle = Math.PI / 180 * (360 / 6) * i;
+                let endAngle = Math.PI / 180 * (360 / 6) * (i + 1);
+                context.save();
+                console.log(endAngle);
+                drawRound(context, obj.width / 2, obj.height / 2, 200, -startAngle, -endAngle, true, i, "#5f59ff",
+                    "#7575ff",true);
+                drawRound(context, obj.width / 2, obj.height / 2, 80, -startAngle, -endAngle, true, i, "#5f59ff");
+                context.restore();
+
+            }
+            
+        }
+
+        function drawRound(_context, _x, _y, _r, _startAngle, _endAngle, _isFalse, _index, color1, color2, texttrue) {
+
+            _context.beginPath();
+            _context.moveTo(_x, _y);
+            if (_index % 2 === 0) {
+                _context.fillStyle = color1;
+            } else {
+                _context.fillStyle = color2 ? color2 : color1;
+            }
+            _context.arc(_x, _y, _r, _startAngle, _endAngle, _isFalse);
+            _context.closePath();
+            _context.fill();
+            //文字
+          
+            if (texttrue) {
+                _context.save();
+                // _context.moveTo(_x, _y);
+                _context.font = '20px sans-serif';
+                // _context.rotate(-(Math.PI / 180 * 60 / 2));
+                _context.fillStyle = '#000';
+                // _context.rotate(-_endAngle +  Math.PI * 2 / 6 / 2 + Math.PI / 2);
+                _context.fillText("text" + _index, _x + Math.sin(-_endAngle) * _r - _context.measureText("text").width, _y + Math.cos(-_endAngle) * _r);
+                _context.restore();
+                // console.log(11);
+            }
+
+          
+        }
+        draw();
+    </script>
+</body>
+
+</html>
